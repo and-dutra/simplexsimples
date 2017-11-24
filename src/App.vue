@@ -3,9 +3,13 @@
     <div class="hero is-medium is-primary is-bold">
       <div class="hero-body">
           <div class="container has-text-centered">
-              <div v-if="!started">
+              <div v-if="passo == 1">
                 <Inicio/>
               </div>
+              <div v-else>
+                <PassoUm />  
+              </div>
+
             </div>
         </div>
     </div>
@@ -18,17 +22,19 @@
 import HelloWorld from './components/HelloWorld'
 import Baixo from './components/Baixo'
 import Inicio from './components/Inicio'
+import PassoUm from './components/PassoUm'
 
 var data = {
   titulo: 'Seja bem vindo ao simplex simples',
   subtitulo: 'Resolva seus simples de maneira simples e intuitivo',
-  started: false
+  passo: 1
 }
 
 export default {
   name: 'app',
   components: {
     HelloWorld,
+    PassoUm,
     Inicio,
     Baixo
   },
@@ -36,11 +42,12 @@ export default {
     return data
   },
   created () {
+    console.log(this.passo)
     Event.$on('applied', this.handler)
   },
   methods: {
     handler (event) {
-      this.started = true
+      this.passo = 2
     }
   }
 }
