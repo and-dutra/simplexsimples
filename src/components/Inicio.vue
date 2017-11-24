@@ -1,18 +1,13 @@
 <template>
-    <div class="hero is-medium is-primary is-bold">
-      <div class="hero-body">
-          <div class="container has-text-centered">
-      
-            <h1 class="title">
-              {{titulo}}
-            </h1>
-            <h2 class="subtitle">
-              {{subtitulo}}
-            </h2>
+    <div>
+        <h1 class="title">
+            {{titulo}}
+        </h1>
+        <h2 class="subtitle">
+            {{subtitulo}}
+        </h2>
 
-            <a class="button is-large is-dark" v-on:click="pegaClique">Resolver Simplex</a>
-          </div>
-        </div>
+        <a class="button is-large is-dark" @click="pegaClique">Resolver Simplex</a>      
     </div>
 </template>
 <script>
@@ -27,7 +22,7 @@ export default {
   },
   methods: {
     pegaClique (event) {
-      console.log('pega clique')
+      Event.$emit('applied')
     }
   }
 }

@@ -1,8 +1,15 @@
 <template>
-  
   <div id="app">
+    <div class="hero is-medium is-primary is-bold">
+      <div class="hero-body">
+          <div class="container has-text-centered">
+              <div v-if="!started">
+                <Inicio/>
+              </div>
+            </div>
+        </div>
+    </div>
 
-    <Inicio/>
     <Baixo/>
   </div>
 </template>
@@ -17,6 +24,7 @@ var data = {
   subtitulo: 'Resolva seus simples de maneira simples e intuitivo',
   started: false
 }
+
 export default {
   name: 'app',
   components: {
@@ -26,6 +34,14 @@ export default {
   },
   data: function () {
     return data
+  },
+  created () {
+    Event.$on('applied', this.handler)
+  },
+  methods: {
+    handler (event) {
+      this.started = true
+    }
   }
 }
 </script>
