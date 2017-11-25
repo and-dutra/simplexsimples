@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        <div v-if="!resolvido">
         <h2 class="is-size-3 has-text-weight-bold">Função:</h2>
         <div class="level field is-grouped is-grouped-multiline">
           <template v-for="(n,index) in variaveis">
@@ -11,21 +11,43 @@
           </template>
         </div>
         
+
+        <h2 class="is-size-3 has-text-weight-bold">Restricoes:</h2>
         <template v-for="(val,key) in restricoes">
+            <div class="level field is-grouped is-grouped-multiline">
             <template v-for="(val2,key2) in variaveis+1">
-              {{val}} e {{key}} | {{val2}} e {{key2}} FIM DA LINHA </br>   
-              <input type="number" v-model="restricoesFunc[key][key2]"> 
-            </template>              
+              <p class="control">
+                <span class="control has-text-weight-bold	has-text-white is-size-4" v-if="key2 == variaveis">
+                   <= 
+                  </span>
+               <input class="input pequeno" type="number" placeholder="" v-model="restricoesFunc[key][key2]"> 
+              </p>
+              <p class="control has-text-weight-bold	has-text-white is-size-4">
+                 <span v-if="key2 != variaveis" >
+                   X{{val2}}
+                  </span>
+                  <span v-if="key2 < variaveis - 1" >
+                   + 
+                  </span>
+              </p>
+            </template> 
+            </div>             
         </template>
         
-        {{inputsFunc}}
-        {{restricoesFunc}}
+        <a class="button is-large is-dark" @click="resolver">Resolver</a>
+        </div>
     </div>
 </template>
 <script>
+import simplex from 'simplex-solver'
+
 var data = {
   inputsFunc: [],
-  restricoesFunc: [[]]
+  restricoesFunc: [[]],
+  textoFunc: '',
+  resultado: {},
+  arrayRest: [],
+  resolvido: false
 }
 export default {
   name: 'PassoDois',
@@ -42,7 +64,42 @@ export default {
   methods: {
     preencherArray () {
       this.restricoesFunc = Array(this.restricoes).fill(0).map(() => Array(this.variaveis + 1).fill('0'))
+    },
+    resolver() {
+      this.inputsFunc.forEach(this.recebeFuncao)
+      this.recebeRestricoes()      
+    },
+    recebeFuncao (element,index,array) {
+      // console.log("a[" + index + "] = " + element)
+      this.textoFunc += String(element)+'x'+String(index+1)
+      if(index+1 != this.inputsFunc.length) {
+        this.textoFunc += " + "
+      }
+      // console.log(this.textoFunc)
+    },
+    recebeRestricoes () {
+      this.arrayRest = []
+      for (let index = 0; index < this.restricoes; index++) {
+        // console.log(this.restricoesFunc[index])
+        var texto = ''
+        for (let jndex = 0; jndex < this.restricoesFunc[index].length; jndex++) {
+          if(jndex < this.variaveis) {
+            texto += String(this.restricoesFunc[index][jndex])+'x'+String(jndex+1)
+          } else {
+            texto += String(this.restricoesFunc[index][jndex])
+          }
+          
+          if(jndex < this.variaveis-1) {
+            texto += ' + '
+          } else if (jndex == this.variaveis-1) {
+            texto += ' <= '
+          }
+        }   
+        this.arrayRest.push(texto)
+      }
+      // console.log(this.arrayRest)
     }
+
   }
 }
 </script>

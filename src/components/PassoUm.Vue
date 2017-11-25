@@ -22,7 +22,7 @@
                 </div>
                 <div class="field">
                  <label class="label">Quantas variavéis de restrição?</label>    
-                 <div class="control">
+                    <div class="control">
                         <div class="select">
                             <select v-model="operacao">
                             <option>Maximizar</option>
