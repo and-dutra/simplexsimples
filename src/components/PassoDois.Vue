@@ -7,7 +7,7 @@
             <p class="control" v-bind:key="index" >
               <input v-model.number="inputsFunc[index]" class="input pequeno" type="number" placeholder="">
             </p>
-            <p class="control has-text-weight-bold	has-text-white is-size-4"> X{{n}} <span v-if="n != variaveis">+</span> </p>
+            <p class="control has-text-weight-bold	has-text-white is-size-4" v-bind:key="index" > X{{n}} <span v-if="n != variaveis">+</span> </p>
           </template>
         </div>
         
