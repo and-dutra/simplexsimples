@@ -5,7 +5,7 @@
         <div class="level field is-grouped is-grouped-multiline">
           <template v-for="(n,index) in variaveis">
             <p class="control" v-bind:key="index" >
-              <input v-model.number="inputsFunc[index]" class="input pequeno" type="number" placeholder="">
+              <input v-model.number="inputsFunc[index]" class="input pequeno" type="number" v-on:keyup="isDisabled" >
             </p>
             <p class="control has-text-weight-bold	has-text-white is-size-4" v-bind:key="index" > X{{n}} <span v-if="n != variaveis">+</span> </p>
           </template>
@@ -20,7 +20,7 @@
                 <span class="control has-text-weight-bold	has-text-white is-size-4" v-if="key2 == variaveis">
                    <=
                   </span>
-               <input class="input pequeno" type="number" placeholder="" v-model="restricoesFunc[key][key2]"> 
+               <input v-on:keyup="isDisabled" class="input pequeno" type="number" placeholder="" v-model="restricoesFunc[key][key2]"> 
               </p>
               <p class="control has-text-weight-bold	has-text-white is-size-4">
                  <span v-if="key2 != variaveis" >
@@ -33,13 +33,14 @@
             </template> 
             </div>             
         </template>
-        {{restricoesFunc}}
-        <a class="button is-large is-dark" @click="resolver">Resolver</a>
+
+        <a class="button is-large is-dark" @click="resolver" :disabled="disabled">Resolver</a>
         </div>
         <div v-else>
           <PassoTres :problema="textoFunc" :restricoes="arrayRest"/>
         </div>
     </div>
+    
 </template>
 <script>
 
@@ -51,6 +52,7 @@ var data = {
   textoFunc: '',
   resultado: {},
   arrayRest: [],
+  disabled: true,
   resolvido: false
 }
 export default {
@@ -106,6 +108,33 @@ export default {
       }
       // console.log(this.arrayRest)
       this.resolvido = true
+    },
+    ativaBotaoRestricoes() {
+      // console.log(this.restricoes)
+        for (let index = 0; index < this.restricoes; index++) {
+          var elemento = this.restricoesFunc[index][this.variaveis]
+          // console.log(index)
+          if(elemento == 0 || isNaN(elemento)) {
+            return false
+          } 
+        }
+        return true
+    },
+    isDisabled (event) {
+      var ativo = false
+      if(this.variaveis != this.inputsFunc.length) {
+        ativo = false
+      } else {
+        ativo = true
+      }
+
+      ativo = this.ativaBotaoRestricoes()
+      
+      if(ativo) {
+        this.disabled = false
+      } else {
+        this.disabled = true
+      } 
     }
 
   }
