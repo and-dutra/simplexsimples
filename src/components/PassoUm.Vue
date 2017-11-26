@@ -1,4 +1,5 @@
 <template>
+
     <div>
         <div class="columns is-centered">
             <template v-if="!step2">
@@ -85,4 +86,5 @@ export default {
 .button.is-large {
     margin-top: 20px;
 }
+
 </style>

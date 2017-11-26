@@ -1,5 +1,7 @@
 <template>
     <div>
+       
+
         <div v-if="!resolvido">
         <h2 class="is-size-3 has-text-weight-bold">Função:</h2>
         <div class="level field is-grouped is-grouped-multiline">
@@ -39,6 +41,7 @@
         <div v-else>
           <PassoTres :problema="textoFunc" :restricoes="arrayRest"/>
         </div>
+
     </div>
     
 </template>
@@ -75,8 +78,10 @@ export default {
       this.restricoesFunc = Array(this.restricoes).fill(0).map(() => Array(this.variaveis + 2).fill('0'))
     },
     resolver() {
-      this.inputsFunc.forEach(this.recebeFuncao)
-      this.recebeRestricoes()      
+      if(!disabled) {
+        this.inputsFunc.forEach(this.recebeFuncao)
+        this.recebeRestricoes()      
+      }
     },
     recebeFuncao (element,index,array) {
       // console.log("a[" + index + "] = " + element)

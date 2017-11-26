@@ -2,6 +2,7 @@
   <div id="app">
     <div class="hero is-medium is-primary is-bold">
       <div class="hero-body">
+        <transition name="fade">
           <div class="container has-text-centered">
               <div v-if="passo == 1">
                 <Inicio/>
@@ -9,8 +10,8 @@
               <div v-else>
                 <PassoUm />  
               </div>
-
             </div>
+        </transition>
         </div>
     </div>
 

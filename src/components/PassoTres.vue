@@ -1,4 +1,5 @@
 <template>
+ <transition name="fade">
     <div>
         <h2 class="is-size-3 has-text-weight-bold">Resultado:</h2>
         <table class="table is-bordered">
@@ -55,6 +56,7 @@
         </template>
 
     </div>
+ </transition>
 </template>
 
 <script>
