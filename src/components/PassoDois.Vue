@@ -18,7 +18,7 @@
             <template v-for="(val2,key2) in variaveis+1">
               <p class="control">
                 <span class="control has-text-weight-bold	has-text-white is-size-4" v-if="key2 == variaveis">
-                   <= 
+                   <=
                   </span>
                <input class="input pequeno" type="number" placeholder="" v-model="restricoesFunc[key][key2]"> 
               </p>
@@ -33,13 +33,17 @@
             </template> 
             </div>             
         </template>
-        
+        {{restricoesFunc}}
         <a class="button is-large is-dark" @click="resolver">Resolver</a>
+        </div>
+        <div v-else>
+          <PassoTres :problema="textoFunc" :restricoes="arrayRest"/>
         </div>
     </div>
 </template>
 <script>
-import simplex from 'simplex-solver'
+
+import PassoTres from './PassoTres'
 
 var data = {
   inputsFunc: [],
@@ -52,6 +56,9 @@ var data = {
 export default {
   name: 'PassoDois',
   props: ['restricoes', 'variaveis', 'operacao'],
+  components: {
+    PassoTres
+  },
   data: function () {
     return data
   },
@@ -63,7 +70,7 @@ export default {
   },
   methods: {
     preencherArray () {
-      this.restricoesFunc = Array(this.restricoes).fill(0).map(() => Array(this.variaveis + 1).fill('0'))
+      this.restricoesFunc = Array(this.restricoes).fill(0).map(() => Array(this.variaveis + 2).fill('0'))
     },
     resolver() {
       this.inputsFunc.forEach(this.recebeFuncao)
@@ -98,6 +105,7 @@ export default {
         this.arrayRest.push(texto)
       }
       // console.log(this.arrayRest)
+      this.resolvido = true
     }
 
   }
