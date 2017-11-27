@@ -21,7 +21,7 @@
 
         <h3 class="is-size-4 has-text-weight-bold">Resolução Passo a Passo (Tableau):</h3>
         <template v-for="item,index in tabelas">
-           <h3 class="is-size-5 has-text-left has-text-weight-bold">Tableau {{index+1}}</h3>
+           <h3 class="is-size-5 has-text-left has-text-weight-bold">Passo {{index+1}}</h3>
            <table class="table is-bordered">
              <thead>
                <tr>

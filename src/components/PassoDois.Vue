@@ -78,7 +78,7 @@ export default {
       this.restricoesFunc = Array(this.restricoes).fill(0).map(() => Array(this.variaveis + 2).fill('0'))
     },
     resolver() {
-      if(!disabled) {
+      if(!this.disabled) {
         this.inputsFunc.forEach(this.recebeFuncao)
         this.recebeRestricoes()      
       }
@@ -125,15 +125,16 @@ export default {
         }
         return true
     },
-    isDisabled (event) {
+    isDisabled () {
       var ativo = false
       if(this.variaveis != this.inputsFunc.length) {
         ativo = false
       } else {
         ativo = true
       }
-
-      ativo = this.ativaBotaoRestricoes()
+      if(ativo) {
+       ativo = this.ativaBotaoRestricoes()
+      }
       
       if(ativo) {
         this.disabled = false
