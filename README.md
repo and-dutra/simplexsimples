@@ -16,6 +16,7 @@ Ferramentas
  - Javascript
  - Vue JS
  - Bulma CSS
+ - Simplex Solver ( biblioteca )
  - Github e Github pages
 ## Build Setup
 
