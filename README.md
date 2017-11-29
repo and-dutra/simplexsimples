@@ -3,7 +3,7 @@ Simplex Simples
 
 Aplicação para resolver simples feita para disciplina de pesquisa operacional alunos:
 André D Oliveira RA: 555924
-Raul Dias RA: 5486650
+Raul Dias RA: 548650
 
 Live demo https://and-dutra.github.io/simplexsimples/
 
