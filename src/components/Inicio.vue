@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     pegaClique (event) {
-      Event.$emit('applied')
+      Event.$emit('applied',{id : 1})
     }
   }
 }

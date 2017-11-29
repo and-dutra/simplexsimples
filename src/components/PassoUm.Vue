@@ -2,7 +2,7 @@
 
     <div>
         <div class="columns is-centered">
-            <template v-if="!step2">
+            <template v-if="passo == 1">
             <div class="column is-one-third">
                 <h1 class="title">
                     Vamos começar!
@@ -18,7 +18,7 @@
                 <div class="field">
                     <label class="label">Quantas variavéis de restrição?</label>
                     <div class="control">
-                        <input class="input" v-on:keyup="isDisabled" type="number" placeholder="ex: 2" v-model.number="numRes">
+                        <input class="input" v-on:keyup="isDisabled" v-on:keyup.enter="irProx" type="number" placeholder="ex: 2" v-model.number="numRes">
                     </div>
                 </div>
                 <div class="field">
@@ -32,7 +32,15 @@
                         </div>
                     </div>
                 </div>
-                <a class="button is-large is-dark" @click="irProx" :disabled="disabled">Continuar</a>      
+                <div class="columns is-desktop is-vcentered">
+                    <div class="column">
+                        <a class="button is-large is-dark" @click="irProx" :disabled="disabled">Continuar</a>
+                    </div>
+                    <div class="column">
+                        <a class="button is-light is-large" @click="irVoltar">Voltar</a>      
+                    </div>
+                </div>
+                
             </div>
             </template>
             <template v-else>
@@ -49,6 +57,7 @@ var data = {
   numRes: null,
   disabled: true,
   operacao: 'Maximizar',
+  passo : 1,
   step2: false
 }
 export default {
@@ -58,6 +67,10 @@ export default {
   },
   data: function () {
     return data
+  },
+  created () {
+    // console.log(this.passo)
+    Event.$on('applied', this.handler)
   },
   methods: {
     isDisabled (event) {
@@ -71,9 +84,20 @@ export default {
     irProx (event) {
       if (!this.disabled) {
         // console.log('btn clique')
-        this.step2 = true
+        // this.step2 = true
+        this.passo = 2
       }
+    },
+    irVoltar(event) {
+     console.log('volta')   
+     this.passo = 1
+     Event.$emit('applied',{id : 0})
+    },
+     handler (event) {
+      console.log(event.id)
+      this.passo = event.id
     }
+
   }
 }
 </script>

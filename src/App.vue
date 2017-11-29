@@ -4,10 +4,10 @@
       <div class="hero-body">
         <transition name="fade">
           <div class="container has-text-centered">
-              <div v-if="passo == 1">
+              <div v-if="passo == 0">
                 <Inicio/>
               </div>
-              <div v-else>
+              <div v-if="passo == 1">
                 <PassoUm />  
               </div>
             </div>
@@ -28,7 +28,7 @@ import PassoUm from './components/PassoUm'
 var data = {
   titulo: 'Seja bem vindo ao simplex simples',
   subtitulo: 'Resolva seus simples de maneira simples e intuitivo',
-  passo: 1
+  passo: 0
 }
 
 export default {
@@ -43,12 +43,13 @@ export default {
     return data
   },
   created () {
-    console.log(this.passo)
+    // console.log(this.passo)
     Event.$on('applied', this.handler)
   },
   methods: {
     handler (event) {
-      this.passo = 2
+      console.log(event.id)
+      this.passo = event.id
     }
   }
 }

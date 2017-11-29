@@ -2,7 +2,7 @@
     <div>
        
 
-        <div v-if="!resolvido">
+        <div v-if="passo == 2">
         <h2 class="is-size-3 has-text-weight-bold">Função:</h2>
         <div class="level field is-grouped is-grouped-multiline">
           <template v-for="(n,index) in variaveis">
@@ -22,7 +22,7 @@
                 <span class="control has-text-weight-bold	has-text-white is-size-4" v-if="key2 == variaveis">
                    <=
                   </span>
-               <input v-on:keyup="isDisabled" class="input pequeno" type="number" placeholder="" v-model="restricoesFunc[key][key2]"> 
+               <input v-on:keyup="isDisabled" v-on:keyup.enter="resolver" class="input pequeno" type="number" placeholder="" v-model="restricoesFunc[key][key2]"> 
               </p>
               <p class="control has-text-weight-bold	has-text-white is-size-4">
                  <span v-if="key2 != variaveis" >
@@ -36,7 +36,16 @@
             </div>             
         </template>
 
-        <a class="button is-large is-dark" @click="resolver" :disabled="disabled">Resolver</a>
+        <div class="columns topo is-desktop is-vcentered">
+            <div class="column">
+                <a class="button is-large is-dark" @click="resolver" :disabled="disabled">Resolver</a>
+            </div>
+            <div class="column">
+                <a class="button is-light is-large" @click="irVoltar">Voltar</a>      
+            </div>
+        </div>
+
+        
         </div>
         <div v-else>
           <PassoTres :problema="textoFunc" :restricoes="arrayRest" :operacao="operacao"/>
@@ -55,6 +64,7 @@ var data = {
   textoFunc: '',
   resultado: {},
   arrayRest: [],
+  passo: 2,
   disabled: true,
   resolvido: false
 }
@@ -81,6 +91,7 @@ export default {
       if(!this.disabled) {
         this.inputsFunc.forEach(this.recebeFuncao)
         this.recebeRestricoes()      
+        this.passo = 3
       }
     },
     recebeFuncao (element,index,array) {
@@ -144,6 +155,10 @@ export default {
       } else {
         this.disabled = true
       } 
+    },
+    irVoltar() {
+      this.passo = 2
+      Event.$emit('applied',{id : 1})
     }
 
   }
@@ -159,5 +174,8 @@ input.pequeno {
   color:#FFF;
   font-weight: 700;
   margin-right: 5px;
+}
+.topo {
+  margin-top: 30px;
 }
 </style>

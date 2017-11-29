@@ -2,6 +2,7 @@
  <transition name="fade">
     <div>
         <h2 class="is-size-3 has-text-weight-bold">Resultado:</h2>
+        <p class="is-size-5">O valor otimizado de Z é {{cabecalhosRes[0]}} confira resultado completo na tabela abaixo</p>
         <template v-if="cabecalhos[0] != 0">
           <table class="table is-bordered">
             <thead>
@@ -19,7 +20,14 @@
               </tr>
             </tbody>       
           </table>
-          <a class="button is-light" @click="mostrarTabelas">Mostrar passos</a>
+          <div class="columns is-desktop is-vcentered">
+              <div class="column">
+                  <a class="button is-light" @click="mostrarTabelas">Mostrar passos</a>
+              </div>
+              <div class="column">
+                  <a class="button is-light" href="./">Voltar ao inicio</a>      
+              </div>
+          </div>
         </template>
         <template v-else>
           <h2 class="is-size-5 has-text-weight-bold">Problema sem solução</h2>
@@ -74,6 +82,7 @@ var data = {
   cabecalhosRes: [],
   res: {},
   mostrarPassos : false,
+  passo: 3,
   tabelas: {}
 }
 export default {
@@ -86,6 +95,9 @@ export default {
   methods: {
     mostrarTabelas() {
       this.mostrarPassos = !this.mostrarPassos
+    },
+    irVoltar() {
+      // Event.$emit('applied',{id : 1})
     }
   },
   created: function() {
