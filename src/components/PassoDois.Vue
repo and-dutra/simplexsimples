@@ -39,7 +39,7 @@
         <a class="button is-large is-dark" @click="resolver" :disabled="disabled">Resolver</a>
         </div>
         <div v-else>
-          <PassoTres :problema="textoFunc" :restricoes="arrayRest"/>
+          <PassoTres :problema="textoFunc" :restricoes="arrayRest" :operacao="operacao"/>
         </div>
 
     </div>
@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     preencherArray () {
-      this.restricoesFunc = Array(this.restricoes).fill(0).map(() => Array(this.variaveis + 2).fill('0'))
+      this.restricoesFunc = Array(this.restricoes).fill(0).map(() => Array(this.variaveis + 1).fill('0'))
     },
     resolver() {
       if(!this.disabled) {
@@ -84,12 +84,14 @@ export default {
       }
     },
     recebeFuncao (element,index,array) {
-      // console.log("a[" + index + "] = " + element)
+      if(this.operacao == 'Minimizar') {
+        element = element * -1
+      }
       this.textoFunc += String(element)+'x'+String(index+1)
       if(index+1 != this.inputsFunc.length) {
         this.textoFunc += " + "
       }
-      // console.log(this.textoFunc)
+      console.log(this.textoFunc)
     },
     recebeRestricoes () {
       this.arrayRest = []
@@ -126,6 +128,7 @@ export default {
         return true
     },
     isDisabled () {
+      // console.log(this.restricoesFunc)
       var ativo = false
       if(this.variaveis != this.inputsFunc.length) {
         ativo = false

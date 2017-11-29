@@ -16,7 +16,6 @@ Ferramentas
  - Javascript
  - Vue JS
  - Bulma CSS
- - Simplex Solver ( biblioteca )
  - Github e Github pages
 ## Build Setup
 
@@ -51,9 +50,10 @@ Funcionalidade   | Nível | Situação | Observação
 Front End        |   1    | Concluído|
 Receber dados    | 1 | Concluído |
 Resolver problemas de maximização     | 1 |Concluído| Restrições do tipo <= ( finito ou infinito ) 
-Resolver problemas de minização     | 1 |Pendente| Restrições do tpo <= ( finito ou infinito ) 
+Resolver problemas de minização     | 1 |Concluído| Restrições do tpo <= ( finito ou infinito ) 
 Mostrar resultado |2 | Concluído | 
 Mostrar passo-a-passo | 2 | Concluído |
+Análise de Sensibilidade | 2 | Pendente |
 Guia de uso | 3 | Pendente 
 
 
