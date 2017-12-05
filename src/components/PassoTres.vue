@@ -8,7 +8,7 @@
             <thead>
               <tr>
                 <template  v-for="(n,i) in cabecalhos">
-                    <th>{{cabecalhos[i]}}</th>
+                      <th>{{cabecalhos[i]}}</th>
                 </template>
               </tr>
             </thead>   
@@ -39,14 +39,27 @@
            <table class="table is-bordered">
              <thead>
                <tr>
-               <template  v-for="cab in item.variables">
-                <th>{{cab}}</th>
+               <template  v-for="cab,i in item.variables">
+                  <th>
+                  <span v-if="i == 0">Base</span>
+                  <span v-else> {{cab}} </span>                  
+                  </th>
               </template>
               </tr>
-              <template  v-for="linhas in item.rows">
+              <template  v-for="linhas,r in item.rows">
                 <tr>
-                <template  v-for="lin in linhas">
-                  <td>{{lin}}</td>
+                <template  v-for="lin,i in linhas">
+                  <td>
+                    <span v-if="i == 0 && lin == 0">
+                      F{{r+1}}
+                    </span>
+                    <span v-else-if="i == 0">
+                     Z
+                    </span>
+                    <span v-else>
+                      {{lin}}
+                    </span>
+                  </td>
                 </template>
                 </tr>
               </template>
@@ -140,7 +153,21 @@ export default {
     }
 
     this.tabelas = resultado.tableaus
+
     // console.log(this.tabelas)
+    console.log('ahsdf');
+    // console.log(this.tabelas[0].rows)
+    console.log(this.tabelas)
+
+    for (let index = 0; index < this.tabelas[0].rows.length; index++) {
+      // const element = array[index];
+        console.log(index);
+        const temp = this.tabelas[index].rows.shift()
+        this.tabelas[index].rows.push(temp);  
+    }
+
+
+    console.log(this.tabelas)
   }
 }
 </script>
