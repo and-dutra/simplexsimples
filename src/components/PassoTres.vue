@@ -149,16 +149,16 @@ export default {
             if(isNaN(minimo) || resolve < minimo) {
               minimo = resolve
             } 
-            console.log({
-              Indice: ind,
-              Index : index,
-              Sombra : sombra,
-              B: b,
-              BInicil: bInicial,
-              Funcao: funcao,
-              Res: resolve
-            })
-            console.log('fim')
+          //   console.log({
+          //     Indice: ind,
+          //     Index : index,
+          //     Sombra : sombra,
+          //     B: b,
+          //     BInicil: bInicial,
+          //     Funcao: funcao,
+          //     Res: resolve
+          //   })
+          //   console.log('fim')
           }
         }
 
@@ -178,8 +178,22 @@ export default {
       if(sombra == 0) {
         return this.tabelas[0].rows[ind][ultimaColuna] / this.tabelas[this.tabelas.length-1].rows[ind][this.numVariaveisDecisao+1+ind]
       } else {
-        
-        return 777
+        let maximo
+        for (let index = 0; index < this.tabelas[this.tabelas.length-1].rows.length-1; index++) {
+          const funcao =  this.tabelas[this.tabelas.length-1].rows[index][this.numVariaveisDecisao+ind+1]
+          if(funcao != 0) {
+            const b = this.tabelas[this.tabelas.length-1].rows[index][ultimaColuna]
+            const bInicial = this.tabelas[0].rows[ind][ultimaColuna]
+            
+            var resolve = (b*-1)/funcao + bInicial
+
+            if(isNaN(maximo) || resolve > maximo) {
+              maximo = resolve
+            } 
+            
+          }
+        }
+        return maximo
       }
     },
     retornaValorInicial(ind) {
