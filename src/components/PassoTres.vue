@@ -80,8 +80,12 @@
                </template>
             </p>
             </div>
+
+
         </template>
-        </div>
+         <h3 class="is-size-4 has-text-weight-bold">Análise de Sensibilidade</h3>
+         <p class="is-size-5">Se o valor de Sombra for 0, serão mostrados os valores iniciais</p>
+        </div> <!-- fim do if mostrar passos       -->
     </div>
  </transition>
 </template>
@@ -96,6 +100,8 @@ var data = {
   res: {},
   mostrarPassos : false,
   passo: 3,
+  numVariaveisDecisao: 0,
+  sensibilidade: [[]],
   tabelas: {}
 }
 export default {
@@ -111,7 +117,77 @@ export default {
     },
     irVoltar() {
       // Event.$emit('applied',{id : 1})
+    },
+    retornaPrecoSombra(ind) {
+      // const numVD = (this.tabelas[0].rows[0].length - this.restricoes.length) - 1 + ind //Numero de variaveis de decisao
+      // console.log(this.problema)
+      // console.log('Sensibilidade')
+      // console.log(numVD)
+      // console.log(this.tabelas[this.tabelas.length-1].rows[this.tabelas[0].rows.length-1][numVD])
+      return this.tabelas[this.tabelas.length-1].rows[this.tabelas[0].rows.length-1][this.numVariaveisDecisao+1+ind]
+    },
+    retornaLimiteMinimo(ind) {
+      // console.log('Entrou no limite minimo ' + ind)
+      const sombra = this.tabelas[this.tabelas.length-1].rows[this.tabelas[0].rows.length-1][this.numVariaveisDecisao+1+ind]
+      const ultimaColuna = this.tabelas[0].rows[0].length-1;
+      // console.log(valorDeF)
+      // console.log(this.tabelas[0].rows[0].length-1)
+      let minimo
+      if(sombra == 0) {
+        // console.log(this.tabelas[this.tabelas.length-1].rows[ind][ultimaColuna])
+        return this.tabelas[this.tabelas.length-1].rows[ind][ultimaColuna]
+      } else {
+        
+        for (let index = 0; index < this.tabelas[this.tabelas.length-1].rows.length-1; index++) {
+          const funcao =  this.tabelas[this.tabelas.length-1].rows[index][this.numVariaveisDecisao+ind+1]
+          if(funcao != 0) {
+            const b = this.tabelas[this.tabelas.length-1].rows[index][ultimaColuna]
+            const bInicial = this.tabelas[0].rows[ind][ultimaColuna]
+            
+            var resolve = (b*-1)/funcao + bInicial
+
+            if(isNaN(minimo) || resolve < minimo) {
+              minimo = resolve
+            } 
+            console.log({
+              Indice: ind,
+              Index : index,
+              Sombra : sombra,
+              B: b,
+              BInicil: bInicial,
+              Funcao: funcao,
+              Res: resolve
+            })
+            console.log('fim')
+          }
+        }
+
+        return minimo
+      }
+    },
+    retornaLimiteMaximo(ind) {
+      const sombra = this.tabelas[this.tabelas.length-1].rows[this.tabelas[0].rows.length-1][this.numVariaveisDecisao+1+ind]
+      const ultimaColuna = this.tabelas[0].rows[0].length-1;
+
+      // console.log({
+      //   index: ind,
+      //   b: this.tabelas[this.tabelas.length-1].rows[ind][ultimaColuna],
+      //   f: this.tabelas[this.tabelas.length-1].rows[ind][this.numVariaveisDecisao+1+ind]
+      // })
+
+      if(sombra == 0) {
+        return this.tabelas[0].rows[ind][ultimaColuna] / this.tabelas[this.tabelas.length-1].rows[ind][this.numVariaveisDecisao+1+ind]
+      } else {
+        
+        return 777
+      }
+    },
+    retornaValorInicial(ind) {
+      const sombra = this.tabelas[this.tabelas.length-1].rows[this.tabelas[0].rows.length-1][this.numVariaveisDecisao+1+ind]
+      const ultimaColuna = this.tabelas[0].rows[0].length-1;
+      return this.tabelas[0].rows[ind][ultimaColuna]
     }
+
   },
   created: function() {
     // console.log({
@@ -119,8 +195,7 @@ export default {
     //   Problema: this.problema,
     //   restricoes: this.restricoes
     // })
-   
-    var resultado = simplex.maximize(this.problema,this.restricoes)
+   var resultado = simplex.maximize(this.problema,this.restricoes)
     // console.log(resultado.Z)
 
     if(resultado === undefined) {
@@ -155,19 +230,28 @@ export default {
     this.tabelas = resultado.tableaus
 
     // console.log(this.tabelas)
-    console.log('ahsdf');
+    // console.log('ahsdf');
     // console.log(this.tabelas[0].rows)
-    console.log(this.tabelas)
+    // console.log(this.tabelas)
 
-    for (let index = 0; index < this.tabelas[0].rows.length; index++) {
-      // const element = array[index];
-        console.log(index);
-        const temp = this.tabelas[index].rows.shift()
-        this.tabelas[index].rows.push(temp);  
+    for (let index = 0; index < this.tabelas.length; index++) {
+      const temp = this.tabelas[index].rows.shift()
+      this.tabelas[index].rows.push(temp);          
     }
 
 
-    console.log(this.tabelas)
+    this.numVariaveisDecisao = this.tabelas[0].rows[0].length - this.restricoes.length - 2
+    // console.log(this.numVariaveisDecisao)
+
+
+    //Construindo tabela de sensibilidade
+    this.sensibilidade[0] = ['Recursos','Preco Sombra','Limite Minimo','Limite Maximo','Valor Inicial (B)']
+    for (let index = 0; index < this.restricoes.length; index++) {
+      this.sensibilidade[index+1] = ['F'+(index+1),this.retornaPrecoSombra(index),this.retornaLimiteMinimo(index),this.retornaLimiteMaximo(index),this.retornaValorInicial(index)]      
+    }
+    
+    console.log(this.sensibilidade)
+    // console.log(this.tabelas)
   }
 }
 </script>

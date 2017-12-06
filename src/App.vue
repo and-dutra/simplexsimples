@@ -2,16 +2,17 @@
   <div id="app">
     <div class="hero is-medium is-primary is-bold">
       <div class="hero-body">
-        <transition name="fade">
+        
           <div class="container has-text-centered">
               <div v-if="passo == 0">
                 <Inicio/>
               </div>
               <div v-if="passo == 1">
-                <PassoUm />  
+                <transition name="slide-fade">
+                    <PassoUm />  
+                  </transition>
               </div>
             </div>
-        </transition>
         </div>
     </div>
 
