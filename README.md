@@ -53,7 +53,7 @@ Resolver problemas de maximização     | 1 |Concluído| Restrições do tipo <=
 Resolver problemas de minização     | 1 |Concluído| Restrições do tpo <= ( finito ou infinito ) 
 Mostrar resultado |2 | Concluído | 
 Mostrar passo-a-passo | 2 | Concluído |
-Análise de Sensibilidade | 2 | Pendente |
+Análise de Sensibilidade | 2 | Concluído |
 Guia de uso | 3 | Pendente 
 
 

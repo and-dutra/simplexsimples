@@ -85,6 +85,27 @@
         </template>
          <h3 class="is-size-4 has-text-weight-bold">Análise de Sensibilidade</h3>
          <p class="is-size-5">Se o valor de Sombra for 0, serão mostrados os valores iniciais</p>
+         <table class="table is-bordered">
+           <thead>
+             <tr>
+                <template  v-for="(n,i) in sensibilidade[0]">
+                      <th>{{n}}</th>
+                </template>
+              </tr>
+           </thead>
+           <tbody>
+             <template v-for="d,i in sensibilidade.length-1">
+               <tr>
+                 
+                 <template v-for="z,j in sensibilidade[0]">
+                   <td>
+                     {{sensibilidade[d][j]}}
+                   </td>
+                  </template>
+               </tr>
+             </template>
+           </tbody>
+         </table>
         </div> <!-- fim do if mostrar passos       -->
     </div>
  </transition>
@@ -190,7 +211,7 @@ export default {
             if(isNaN(maximo) || resolve > maximo) {
               maximo = resolve
             } 
-            
+
           }
         }
         return maximo
